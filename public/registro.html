@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro de Usuario | Mediterraneo</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+    }
+
+    .form-container {
+      max-width: 600px;
+      margin: 120px auto 0; /* separación para que no tape el navbar */
+    }
+  </style>
+</head>
+<body>
+
+  <!--Navbar-->
+  <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="inicio.html">𝙼𝚎𝚍𝚒𝚝𝚎𝚛𝚛𝚊𝚗𝚎𝚘</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link active" href="catalogo.html">Catálogo</a></li>
+          <li class="nav-item"><a class="nav-link" href="sobre_nosotros.html">Acerca de nosotros</a></li>
+        </ul>
+
+        <ul class="navbar-nav ms-auto">
+
+          <li class="nav-item me-3">
+            <a class="nav-link" href="carrito.html" title="Ver Pedido">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+                <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.485-.379L1.71 5.438a.5.5 0 0 1-.485-.379L.105 1.562A.5.5 0 0 1 0 1.5zm1.115 3.5h12.77L13 5H3.19zM4 14a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm10 0a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+              </svg>
+            </a>
+          </li>
+
+          <li id="session-nav" class="nav-item dropdown"></li>
+
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+<div class="container py-4">
+  <div class="form-container">
+    <h1 class="mb-4 text-center">Crear una Cuenta Nueva</h1>
+    <p class="text-center text-muted">¡Regístrate para acceder a tu perfil y obtener descuentos exclusivos!</p>
+
+    <form id="registroForm" class="row g-3 p-4 border rounded shadow-sm bg-white">
+      <h5 class="mt-0">Datos de Acceso</h5>
+      <div class="col-md-6">
+        <label for="inputEmail" class="form-label">Correo Electrónico <span class="text-danger">*</span></label>
+        <input type="email" class="form-control" id="inputEmail" name="email" required placeholder="ej: ana@example.com">
+        <div class="form-text text-danger d-none" id="emailError">El email ya está en uso.</div>
+      </div>
+      <div class="col-md-6">
+        <label for="inputPassword" class="form-label">Contraseña <span class="text-danger">*</span></label>
+        <input type="password" class="form-control" id="inputPassword" name="password" required pattern=".{8,}" title="Debe tener al menos 8 caracteres" placeholder="Mínimo 8 caracteres">
+        <div class="form-text text-danger d-none" id="passwordError">La contraseña no cumple los requisitos (Mínimo 8 caracteres).</div>
+      </div>
+
+      <hr class="mt-4">
+      <h5>Datos Personales</h5>
+
+      <div class="col-md-6">
+        <label for="inputRun" class="form-label">RUN / ID</label>
+        <input type="text" class="form-control" id="inputRun" placeholder="Ej: 12.345.678-9">
+      </div>
+      <div class="col-md-6">
+        <label for="inputNombre" class="form-label">Nombre Completo</label>
+        <input type="text" class="form-control" id="inputNombre" placeholder="Ana Pérez García">
+      </div>
+
+      <div class="col-md-6">
+        <label for="inputNacimiento" class="form-label">Fecha de Nacimiento</label>
+        <input type="date" class="form-control" id="inputNacimiento">
+      </div>
+      <div class="col-md-6">
+        <label for="selectSexo" class="form-label">Sexo</label>
+        <select id="selectSexo" class="form-select">
+          <option selected>Seleccionar...</option>
+          <option value="M">Masculino</option>
+          <option value="F">Femenino</option>
+          <option value="O">Otro</option>
+        </select>
+      </div>
+
+      <div class="col-12">
+        <label for="inputTelefono" class="form-label">Número Telefónico</label>
+        <input type="tel" class="form-control" id="inputTelefono" placeholder="+56 9 1234 5678">
+      </div>
+
+      <hr class="mt-4">
+      <h5>Dirección</h5>
+
+      <div class="col-12">
+        <label for="inputDireccion" class="form-label">Dirección</label>
+        <input type="text" class="form-control" id="inputDireccion" placeholder="Av. Principal #1234">
+      </div>
+      <div class="col-md-4">
+        <label for="selectComuna" class="form-label">Comuna</label>
+        <input type="text" class="form-control" id="selectComuna" placeholder="Ej: Santiago">
+      </div>
+      <div class="col-md-4">
+        <label for="selectProvincia" class="form-label">Provincia</label>
+        <input type="text" class="form-control" id="selectProvincia" placeholder="Ej: Santiago">
+      </div>
+      <div class="col-md-4">
+        <label for="selectRegion" class="form-label">Región</label>
+        <input type="text" class="form-control" id="selectRegion" placeholder="Ej: Metropolitana">
+      </div>
+
+      <div class="col-12 mt-4">
+        <button type="submit" class="btn btn-primary btn-lg w-100" id="btnRegistro">Regístrate</button>
+      </div>
+
+      <div class="col-12 text-center mt-3">
+        <p class="text-muted mb-0">¿Ya tienes cuenta? <a href="inicio_sesion.html">Inicia sesión aquí</a></p>
+      </div>
+
+      <div class="col-12 mt-4">
+        <div class="alert alert-success d-none" role="alert" id="alertExito">
+          Registro exitoso. ¡Bienvenido/a! Te estamos redirigiendo...
+        </div>
+        <div class="alert alert-warning d-none" role="alert" id="alertEmailExistente">
+          ¡Atención! El email ya está en uso. Por favor, usa otro o <a href="inicio_sesion.html" class="alert-link">inicia sesión</a>.
+        </div>
+        <div class="alert alert-danger d-none" role="alert" id="alertPasswordInvalida">
+          La contraseña no cumple los requisitos. Por favor, revisa la política.
+        </div>
+        <div class="alert alert-danger d-none" role="alert" id="alertGeneralError">
+          Ocurrió un error al registrar tu cuenta. Inténtalo nuevamente más tarde.
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const form           = document.getElementById('registroForm');
+    const inputEmail     = document.getElementById('inputEmail');
+    const inputPassword  = document.getElementById('inputPassword');
+    const inputNombre    = document.getElementById('inputNombre');
+
+    const inputRun        = document.getElementById('inputRun');
+    const inputNacimiento = document.getElementById('inputNacimiento');
+    const selectSexo      = document.getElementById('selectSexo');
+    const inputTelefono   = document.getElementById('inputTelefono');
+    const inputDireccion  = document.getElementById('inputDireccion');
+    const selectComuna    = document.getElementById('selectComuna');
+    const selectProvincia = document.getElementById('selectProvincia');
+    const selectRegion    = document.getElementById('selectRegion');
+
+    const alertExito            = document.getElementById('alertExito');
+    const alertEmailExistente   = document.getElementById('alertEmailExistente');
+    const alertPasswordInvalida = document.getElementById('alertPasswordInvalida');
+    const alertGeneralError     = document.getElementById('alertGeneralError');
+
+    const emailErrorMsg    = document.getElementById('emailError');
+    const passwordErrorMsg = document.getElementById('passwordError');
+
+    const btnRegistro = document.getElementById('btnRegistro');
+
+    function hideAllAlerts() {
+      alertExito.classList.add('d-none');
+      alertEmailExistente.classList.add('d-none');
+      alertPasswordInvalida.classList.add('d-none');
+      alertGeneralError.classList.add('d-none');
+      emailErrorMsg.classList.add('d-none');
+      passwordErrorMsg.classList.add('d-none');
+      inputEmail.classList.remove('is-invalid');
+      inputPassword.classList.remove('is-invalid');
+    }
+
+    form.addEventListener('submit', async function(event) {
+      event.preventDefault();
+      hideAllAlerts();
+
+      const email    = inputEmail.value.trim().toLowerCase();
+      const password = inputPassword.value;
+      const name     = inputNombre.value.trim();
+
+      const run       = inputRun.value.trim();
+      const birthDate = inputNacimiento.value || null;
+      const sexo      = selectSexo.value !== 'Seleccionar...' ? selectSexo.value : '';
+      const telefono  = inputTelefono.value.trim();
+      const direccion = inputDireccion.value.trim();
+      const comuna    = selectComuna.value.trim();
+      const provincia = selectProvincia.value.trim();
+      const region    = selectRegion.value.trim();
+
+      // Validación básica front
+      if (password.length < 8) {
+        alertPasswordInvalida.classList.remove('d-none');
+        inputPassword.classList.add('is-invalid');
+        passwordErrorMsg.classList.remove('d-none');
+        return;
+      }
+
+      btnRegistro.disabled = true;
+      btnRegistro.textContent = "Registrando...";
+
+      try {
+        const res = await fetch('/api/users/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email,
+            password,
+            role: 'Cliente',   // por defecto los registros desde aquí son clientes
+            name,
+            run,
+            birthDate,
+            sexo,
+            telefono,
+            direccion,
+            comuna,
+            provincia,
+            region
+          })
+        });
+
+        const data = await res.json().catch(() => ({}));
+
+        if (!res.ok) {
+          const msg = (data && data.error) ? data.error.toString().toLowerCase() : '';
+          if (res.status === 409 || msg.includes('email') || msg.includes('correo')) {
+            alertEmailExistente.classList.remove('d-none');
+            inputEmail.classList.add('is-invalid');
+            emailErrorMsg.classList.remove('d-none');
+          } else if (msg.includes('password') || msg.includes('contraseña')) {
+            alertPasswordInvalida.classList.remove('d-none');
+            inputPassword.classList.add('is-invalid');
+            passwordErrorMsg.classList.remove('d-none');
+          } else {
+            alertGeneralError.classList.remove('d-none');
+          }
+          return;
+        }
+
+        // Éxito
+        alertExito.classList.remove('d-none');
+        form.reset();
+
+        setTimeout(() => {
+          window.location.href = 'inicio_sesion.html';
+        }, 1500);
+
+      } catch (err) {
+        console.error(err);
+        alertGeneralError.classList.remove('d-none');
+      } finally {
+        btnRegistro.disabled = false;
+        btnRegistro.textContent = "Regístrate";
+      }
+    });
+  });
+</script>
+
+<script src="js/session.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Carrito de Compras | Mediterraneo</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <style>
+    .item-card{border-left:5px solid #0d6efd}
+    .item-image{width:72px;height:72px;object-fit:cover}
+    .muted{color:#6c757d}
+  </style>
+</head>
+<body>
+
+<!--Navbar-->
+  <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="inicio.html">𝙼𝚎𝚍𝚒𝚝𝚎𝚛𝚛𝚊𝚗𝚎𝚘</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link active" href="catalogo.html">Catálogo</a></li>
+          <li class="nav-item"><a class="nav-link" href="sobre_nosotros.html">Acerca de nosotros</a></li>
+        </ul>
+
+        <ul class="navbar-nav ms-auto">
+
+          <li class="nav-item me-3">
+            <a class="nav-link" href="carrito.html" title="Ver Pedido">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+                <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.485-.379L1.71 5.438a.5.5 0 0 1-.485-.379L.105 1.562A.5.5 0 0 1 0 1.5zm1.115 3.5h12.77L13 5H3.19zM4 14a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm10 0a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+              </svg>
+            </a>
+          </li>
+
+          <li id="session-nav" class="nav-item dropdown"></li>
+
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- CONTENT -->
+  <div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <button class="btn btn-outline-secondary" onclick="history.back()">← Volver</button>
+      <button id="btn-clear" class="btn btn-outline-danger">Vaciar carrito</button>
+    </div>
+
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h2 class="h4 mb-4 text-center">Tu Pedido Online</h2>
+
+        <!-- Empty -->
+        <div id="empty" class="alert alert-warning text-center d-none">
+          Tu carrito está vacío. <a href="catalogo.html" class="alert-link">Ir al catálogo</a>
+        </div>
+
+        <!-- Items -->
+        <div id="items" class="list-group mb-4"></div>
+
+        <!-- Summary -->
+        <div id="summary" class="d-flex justify-content-between align-items-center border-top pt-3 d-none">
+          <p class="h5 mb-0">Total: <span id="total" class="fw-bold text-primary">$0</span></p>
+          <a href="checkout_despacho.html" class="btn btn-success btn-lg">Continuar a pagar</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="bg-dark text-white text-center p-3 mt-4">© 2025 Mediterraneo</footer>
+
+  <script>
+    // ===== Helpers =====
+    const money = n => '$' + Number(n||0).toLocaleString('es-CL');
+    const getCart = () => JSON.parse(localStorage.getItem('carrito') || '[]');
+    const setCart = (c) => localStorage.setItem('carrito', JSON.stringify(c));
+
+    // ===== Render =====
+    function render(){
+      const itemsEl = document.getElementById('items');
+      const emptyEl = document.getElementById('empty');
+      const summaryEl = document.getElementById('summary');
+      const totalEl = document.getElementById('total');
+
+      const cart = getCart();
+
+      if(!cart.length){
+        itemsEl.innerHTML = '';
+        emptyEl.classList.remove('d-none');
+        summaryEl.classList.add('d-none');
+        return;
+      }
+      emptyEl.classList.add('d-none');
+      summaryEl.classList.remove('d-none');
+
+      itemsEl.innerHTML = cart.map((it, idx)=>`
+        <div class="list-group-item d-flex align-items-center gap-3 item-card">
+          <img src="${it.image || 'img/default.jpg'}" alt="${it.name}" class="rounded item-image">
+          <div class="flex-grow-1">
+            <div class="d-flex justify-content-between align-items-start flex-wrap">
+              <div class="me-3">
+                <h5 class="mb-1">${it.name}</h5>
+                <div class="muted small">Variante: <strong>${it.variantName}</strong></div>
+                <div class="muted small">Unitario: <span class="unit">${money(it.price)}</span></div>
+              </div>
+              <div class="d-flex align-items-center gap-2">
+                <input type="number" class="form-control form-control-sm qty" data-idx="${idx}"
+                       min="1" max="${it.stock || 99}" value="${it.qty}" style="width:90px">
+                <button class="btn btn-sm btn-outline-danger del" data-idx="${idx}">
+                  Eliminar
+                </button>
+              </div>
+            </div>
+            <div class="fw-bold mt-2">Subtotal: <span class="sub">${money(it.price * it.qty)}</span></div>
+          </div>
+        </div>
+      `).join('');
+
+      const total = cart.reduce((acc, it)=> acc + it.price * it.qty, 0);
+      totalEl.textContent = money(total);
+    }
+
+    // ===== Events (delegated) =====
+    document.getElementById('items').addEventListener('change', (e)=>{
+      if(!e.target.classList.contains('qty')) return;
+      const idx = Number(e.target.dataset.idx);
+      let qty = Math.max(1, Number(e.target.value)||1);
+      const cart = getCart();
+      const max = cart[idx].stock || 99;
+      if(qty > max) qty = max;
+      cart[idx].qty = qty;
+      setCart(cart);
+      render();
+    });
+
+    document.getElementById('items').addEventListener('click', (e)=>{
+      const btn = e.target.closest('.del');
+      if(!btn) return;
+      const idx = Number(btn.dataset.idx);
+      const cart = getCart();
+      cart.splice(idx, 1);
+      setCart(cart);
+      render();
+    });
+
+    document.getElementById('btn-clear').addEventListener('click', ()=>{
+      if(confirm('¿Vaciar carrito?')){
+        localStorage.removeItem('carrito');
+        render();
+      }
+    });
+
+    // Init
+    render();
+  </script>
+
+<script src="js/session.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/session.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Venta</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        /* Estilo para las imágenes de los platos */
+        .item-img {
+            width: 80px;
+            height: 80px;
+            background-color: #f0f0f0; /* Color temporal para 'IMG' */
+            border: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            color: #6c757d;
+        }
+        /* Ajuste para que los botones queden abajo */
+        .card-footer {
+            border-top: none;
+            background-color: white;
+            padding-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container py-4">
+
+  <!--Navbar-->
+  <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="inicio.html">𝙼𝚎𝚍𝚒𝚝𝚎𝚛𝚛𝚊𝚗𝚎𝚘</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link active" href="catalogo.html">Catálogo</a></li>
+          <li class="nav-item"><a class="nav-link" href="sobre_nosotros.html">Acerca de nosotros</a></li>
+        </ul>
+
+        <ul class="navbar-nav ms-auto">
+
+          <li class="nav-item me-3">
+            <a class="nav-link" href="carrito.html" title="Ver Pedido">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+                <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.485-.379L1.71 5.438a.5.5 0 0 1-.485-.379L.105 1.562A.5.5 0 0 1 0 1.5zm1.115 3.5h12.77L13 5H3.19zM4 14a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm10 0a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+              </svg>
+            </a>
+          </li>
+
+          <li id="session-nav" class="nav-item dropdown"></li>
+
+        </ul>
+      </div>
+    </div>
+  </nav>
+    
+    <h1 class="mb-4">Registro de Ventas y Pedidos</h1>
+    
+    <div class="row g-4">
+
+        <div class="col-md-6">
+            <div class="card h-100 shadow-sm">
+                <div class="card-header bg-success text-white">
+                    <h3 class="card-title mb-0">Pedido listo</h3>
+                </div>
+                <div class="card-body">
+                    
+                    <div class="d-flex align-items-center mb-3 border-bottom pb-2">
+                        <div class="item-img me-3">IMG</div>
+                        <div>
+                            <p class="mb-0 fw-bold">Paella Valenciana</p>
+                            <p class="mb-0 small">Cantidad: 2</p>
+                            <p class="mb-0 small">Precio: $30.000</p>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="item-img me-3">IMG</div>
+                        <div>
+                            <p class="mb-0 fw-bold">Moussasaka griega</p>
+                            <p class="mb-0 small">Cantidad: 4</p>
+                            <p class="mb-0 small">Precio: $48.000</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-auto pt-3 border-top">
+                        <p class="fs-5 fw-bold text-end mb-0">Precio Total: $78.000</p>
+                    </div>
+
+                </div>
+                <div class="card-footer text-center">
+                    <button class="btn btn-success w-100" id="btnListo">Registrar venta</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card h-100 shadow-sm">
+                <div class="card-header bg-warning text-dark">
+                    <h3 class="card-title mb-0">Pedido pendiente</h3>
+                </div>
+                <div class="card-body">
+
+                    <div class="d-flex align-items-center mb-3 border-bottom pb-2">
+                        <div class="item-img me-3">IMG</div>
+                        <div>
+                            <p class="mb-0 fw-bold">Gazpacho</p>
+                            <p class="mb-0 small">Cantidad: 4</p>
+                            <p class="mb-0 small">Precio: $120.000</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-auto pt-3 border-top">
+                        <p class="fs-5 fw-bold text-end mb-0">Precio Total: $120.000</p>
+                    </div>
+                </div>
+                <div class="card-footer text-center">
+                    <button class="btn btn-primary w-100" id="btnPendiente">Registrar venta</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="alert alert-success d-none" role="alert" id="alertExito">
+                Venta registrada exitosamente.
+            </div>
+            <div class="alert alert-warning d-none" role="alert" id="alertPendiente">
+                Pago pendiente, no se puede registrar la venta.
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const btnListo = document.getElementById('btnListo');
+        const btnPendiente = document.getElementById('btnPendiente');
+        const alertExito = document.getElementById('alertExito');
+        const alertPendiente = document.getElementById('alertPendiente');
+
+        // Función para ocultar todos los mensajes
+        function hideAllAlerts() {
+            alertExito.classList.add('d-none');
+            alertPendiente.classList.add('d-none');
+        }
+
+        // Simulación de registro para Pedido Listo
+        btnListo.addEventListener('click', function() {
+            hideAllAlerts();
+            alertExito.classList.remove('d-none');
+        });
+
+        // Simulación de registro para Pedido Pendiente
+        btnPendiente.addEventListener('click', function() {
+            hideAllAlerts();
+            alertPendiente.classList.remove('d-none');
+        });
+    });
+</script>
+
+<script src="js/session.js"></script>
+
+</body>
+</html>

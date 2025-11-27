@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Administración de Usuarios</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <style>
+    body{
+      display:flex;
+      flex-direction:column;
+      min-height:100vh;
+      padding-bottom:60px;
+      background:#f8f9fa;
+    }
+    main{flex:1}
+    footer{
+      position:fixed;
+      bottom:0;
+      width:100%;
+    }
+    .user-card{
+      border:1px solid #ddd;
+      border-radius:.5rem;
+      padding:10px;
+      text-align:center;
+      background:#ffffff;
+    }
+    .user-icon{
+      font-size:3rem;
+      color:#0d6efd;
+      margin-bottom:5px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="inicio.html">𝙼𝚎𝚍𝚒𝚝𝚎𝚛𝚛𝚊𝚗𝚎𝚘</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" href="catalogo.html">Catálogo</a></li>
+        <li class="nav-item"><a class="nav-link" href="sobre_nosotros.html">Acerca de nosotros</a></li>
+      </ul>
+
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item me-3">
+          <a class="nav-link" href="carrito.html" title="Ver Pedido">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+              <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.485-.379L1.71 5.438a.5.5 0 0 1-.485-.379L.105 1.562A.5.5 0 0 1 0 1.5zm1.115 3.5h12.77L13 5H3.19zM4 14a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm10 0a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+            </svg>
+          </a>
+        </li>
+
+        <!-- aquí renderiza js/session.js -->
+        <li id="session-nav" class="nav-item dropdown"></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<main class="container my-5">
+  <div class="card shadow-sm border-0">
+    <div class="card-body">
+
+      <!-- Título + botón volver -->
+      <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+        <h1 class="mb-0">Administración de Usuarios</h1>
+        <div class="mt-3 mt-sm-0 d-flex gap-2">
+          <a href="admin_dashboard.html" class="btn btn-outline-secondary btn-sm">
+            ← Volver al panel
+          </a>
+        </div>
+      </div>
+
+      <!-- Navegación rápida entre secciones de admin -->
+      <nav class="mb-4">
+        <ul class="nav nav-pills flex-wrap small">
+          <li class="nav-item">
+            <a class="nav-link" href="admin_productos.html">Productos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="admin_user.html">Usuarios</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="registrar_venta.html">Registrar venta</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="reporte_venta.html">Reportes</a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Tabs -->
+      <ul class="nav nav-tabs" id="adminTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="add-tab" data-bs-toggle="tab" data-bs-target="#addUser" type="button" role="tab">
+            Agregar usuario
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="modify-tab" data-bs-toggle="tab" data-bs-target="#modifyUser" type="button" role="tab">
+            Eliminar / Modificar usuarios
+          </button>
+        </li>
+      </ul>
+
+      <div class="tab-content border border-top-0 p-3 bg-white shadow-sm">
+        <!-- Registrar -->
+        <div class="tab-pane fade show active" id="addUser" role="tabpanel" aria-labelledby="add-tab">
+          <h3 class="mb-3">Registro de Cuenta</h3>
+          <form id="form-register" class="row g-3">
+            <div class="col-lg-6">
+              <label class="form-label">Email</label>
+              <input id="reg-email" type="email" class="form-control" placeholder="usuario@correo.cl" required>
+            </div>
+            <div class="col-lg-6">
+              <label class="form-label">Contraseña</label>
+              <input id="reg-pass" type="password" class="form-control" placeholder="Mínimo 8 caracteres" minlength="8" required>
+            </div>
+            <div class="col-lg-6">
+              <label class="form-label">Nombre</label>
+              <input id="reg-name" type="text" class="form-control" placeholder="Nombre completo (opcional)">
+            </div>
+            <div class="col-lg-6">
+              <label class="form-label">Rol</label>
+              <select id="reg-role" class="form-select">
+                <option value="Cliente" selected>Cliente</option>
+                <option value="Administrador">Administrador</option>
+                <option value="Delivery">Delivery</option>
+                <option value="Cocina">Cocina</option>
+              </select>
+            </div>
+            <div class="col-12 mt-3">
+              <button class="btn btn-primary btn-lg">Registrar</button>
+              <span id="reg-msg" class="ms-2 small text-muted"></span>
+            </div>
+          </form>
+        </div>
+
+        <!-- Modificar/Eliminar -->
+        <div class="tab-pane fade" id="modifyUser" role="tabpanel" aria-labelledby="modify-tab">
+          <h3 class="mb-4">Usuarios Registrados</h3>
+          <div id="users-grid" class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3"></div>
+          <div id="users-empty" class="alert alert-warning d-none mt-3">No hay usuarios.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<footer class="bg-dark text-white text-center p-3">© 2025 Mediterraneo</footer>
+
+<script>
+  // Registrar usuario
+  async function handleRegister(e) {
+    e.preventDefault();
+    const email = document.getElementById("reg-email").value.trim().toLowerCase();
+    const password = document.getElementById("reg-pass").value;
+    const name = document.getElementById("reg-name").value.trim();
+    const role = document.getElementById("reg-role").value;
+    const msg = document.getElementById("reg-msg");
+
+    msg.textContent = "Registrando...";
+    try {
+      const res = await fetch("/api/users/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password, role, name })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data?.error || "Error al registrar");
+
+      msg.textContent = "Usuario registrado";
+      if (document.getElementById("modifyUser").classList.contains("active")) {
+        loadUsers();
+      }
+      e.target.reset();
+      setTimeout(()=> msg.textContent = "", 1500);
+    } catch (err) {
+      msg.textContent = err.message;
+    }
+  }
+
+  // Listar usuarios
+  async function loadUsers() {
+    const grid = document.getElementById("users-grid");
+    const empty = document.getElementById("users-empty");
+    grid.innerHTML = "";
+    empty.classList.add("d-none");
+
+    try {
+      const res = await fetch("/api/users");
+      const users = await res.json();
+      if (!Array.isArray(users) || users.length === 0) {
+        empty.classList.remove("d-none");
+        return;
+      }
+
+      users.forEach(u => {
+        const safeName = (u.name || "(sin nombre)").replace(/"/g, "&quot;");
+        const card = `
+          <div class="col">
+            <div class="user-card h-100">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                   fill="currentColor" class="bi bi-person user-icon" viewBox="0 0 16 16">
+                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.282 10 8 10c-2.28 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664z"/>
+              </svg>
+              <p class="mb-1 fw-bold">${safeName}</p>
+              <p class="small text-muted mb-1">${u.email}</p>
+              <span class="badge text-bg-secondary mb-2">${u.role}</span>
+              <div class="d-grid gap-2">
+                <button class="btn btn-sm btn-info" onclick='openEdit("${u._id}", "${u.email}", "${u.role}", "${safeName}")'>Modificar</button>
+                <button class="btn btn-sm btn-danger" onclick='deleteUser("${u._id}")'>Eliminar</button>
+              </div>
+            </div>
+          </div>
+        `;
+        grid.insertAdjacentHTML("beforeend", card);
+      });
+    } catch {
+      empty.classList.remove("d-none");
+      empty.textContent = "No se pudo cargar la lista.";
+    }
+  }
+
+  // Modificar
+  async function openEdit(id, email, role, name) {
+    const newName = prompt("Nombre:", name || "");
+    if (newName === null) return;
+    const newRole = prompt('Rol (Cliente | Administrador | Delivery | Cocina):', role || "Cliente");
+    if (newRole === null) return;
+
+    let newPass = prompt("Nueva contraseña (dejar vacío para no cambiar):", "");
+    if (newPass === null) return;
+    newPass = newPass.trim();
+    if (newPass && newPass.length < 8) {
+      alert("La contraseña debe tener al menos 8 caracteres");
+      return;
+    }
+
+    const payload = { name: newName, role: newRole };
+    if (newPass) payload.password = newPass;
+
+    try {
+      const res = await fetch(`/api/users/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data?.error || "No se pudo actualizar");
+      alert("Usuario actualizado");
+      loadUsers();
+    } catch (err) {
+      alert("Error: " + err.message);
+    }
+  }
+
+  // Eliminar
+  async function deleteUser(id) {
+    if (!confirm("¿Eliminar este usuario?")) return;
+    try {
+      const res = await fetch(`/api/users/${id}`, { method: "DELETE" });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data?.error || "No se pudo eliminar");
+      loadUsers();
+    } catch (err) {
+      alert("Error: " + err.message);
+    }
+  }
+
+  // Inicialización
+  document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("form-register").addEventListener("submit", handleRegister);
+
+    // Cargar usuarios cuando se muestra el tab de Modificar
+    document.getElementById("modify-tab").addEventListener("shown.bs.tab", loadUsers);
+
+    // Si ya está activo (por recarga en esa pestaña), cargar igual
+    if (document.getElementById("modifyUser").classList.contains("active")) {
+      loadUsers();
+    }
+  });
+
+  window.openEdit = openEdit;
+  window.deleteUser = deleteUser;
+</script>
+
+<!-- Menú de sesión compartido -->
+<script src="js/session.js"></script>
+
+</body>
+</html>
