@@ -9,6 +9,6 @@ export const authOptional = async (req, _res, next) => {
       const u = await User.findById(decoded.uid).select("name email role");
       if(u) req.user = { name: u.name, email: u.email, role: u.role, id: String(u._id) };
     }
-  } catch (_) { /* cookie inválida -> ignorar */ }
+  } catch (_) {}
   next();
 };

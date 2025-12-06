@@ -110,20 +110,3 @@ export const deleteDish = async (req, res) => {
     res.status(500).json({ error: "Error al eliminar" });
   }
 };
-
-//SEED
-export const seedMenu = async (_req, res) => {
-  try {
-    await Dish.deleteMany({});
-    const data = [
-      { name: "Paella Mediterránea", slug: "paella-mediterranea", category: "Plato",  price: 12990, description: "Arroz con mariscos y azafrán" },
-      { name: "Moussaka",            slug: "moussaka",            category: "Plato",  price:  9990, description: "Berenjena, carne y bechamel" },
-      { name: "Hummus",              slug: "hummus",              category: "Entrada",price:  3990, description: "Crema de garbanzos y tahini" }
-    ];
-    await Dish.insertMany(data);
-    res.json({ ok: true, inserted: data.length });
-  } catch (err) {
-    console.error("POST /api/menu/seed error:", err);
-    res.status(500).json({ error: "No se pudo poblar" });
-  }
-};

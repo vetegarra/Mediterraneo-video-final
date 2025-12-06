@@ -55,20 +55,3 @@ export const logout = (req, res) => {
   res.clearCookie("token");
   res.json({ ok:true });
 };
-
-// opcional: crear admin si no existe
-export const seedAdmin = async (_req, res) => {
-  try{
-    const email = "admin@mediterraneo.cl";
-    let u = await User.findOne({ email });
-    if(!u){
-      u = await User.create({
-        name: "Administrador",
-        email,
-        password: "Admin123*",
-        role: "admin"
-      });
-    }
-    res.json({ ok:true, email: u.email });
-  }catch(e){ res.status(500).json({ error:"No se pudo crear admin" }); }
-};

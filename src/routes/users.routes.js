@@ -6,7 +6,7 @@ import {
   updateUser,
   deleteUser,
   seedAdmin,
-  getUser,      // <-- aquí SÍ importas getUser correctamente
+  getUser,
 } from "../controllers/users.controller.js";
 
 const router = Router();
@@ -18,13 +18,11 @@ router.post("/login", loginUser);
 // Admin: listar, modificar y eliminar
 router.get("/", listUsers);
 
-// Obtener datos de un usuario específico (para perfil.html)
-router.get("/:id", getUser);   // <-- ESTA ES LA RUTA NUEVA CORRECTA
+// Obtener datos de un usuario específico
+router.get("/:id", getUser);
 
 router.put("/:id", updateUser);
 router.delete("/:id", deleteUser);
 
-// Seed admin
-router.post("/seed-admin", seedAdmin);
 
 export default router;

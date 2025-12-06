@@ -18,7 +18,7 @@ const seedAdmin = async () => {
     let admin = await User.findOne({ email });
 
     if (admin) {
-      console.log("⚠️ El admin ya existe:", admin.email);
+      console.log("El admin ya existe:", admin.email);
       return;
     }
 
