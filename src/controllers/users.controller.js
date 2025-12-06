@@ -167,29 +167,3 @@ export const deleteUser = async (req, res) => {
     res.status(500).json({ error: "No se pudo eliminar" });
   }
 };
-
-// POST /api/users/seed-admin
-export const seedAdmin = async (_req, res) => {
-  try {
-    const email = "admin@mediterraneo.cl";
-    const pwd = "Clave2025";
-
-    let admin = await User.findOne({ email });
-    if (admin) {
-      return res.json({ ok: true, alreadyExists: true, user: safeUser(admin) });
-    }
-
-    const passwordHash = await bcrypt.hash(pwd, 10);
-    admin = await User.create({
-      name: "Administrador",
-      email,
-      password: passwordHash,
-      role: "Administrador",
-    });
-
-    res.json({ ok: true, created: true, user: safeUser(admin) });
-  } catch (err) {
-    console.error("POST /api/users/seed-admin error:", err);
-    res.status(500).json({ error: "No se pudo crear el admin" });
-  }
-};
